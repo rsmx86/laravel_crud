@@ -28,7 +28,14 @@ class PostController extends Controller
 
         Post::create($request->all());
 
-        // 2. EM VEZ DE SÓ TEXTO, VAMOS REDIRECIONAR:
+        //redirecionamento
         return redirect()->route('posts.index');
     }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('posts.index')->with('succes', 'Post Excluido!');
+    }
+
 }
