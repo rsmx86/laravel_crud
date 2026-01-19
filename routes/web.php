@@ -1,24 +1,30 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController; // <--- IMPORTANTE: Adicione esta linha
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
 
-// Rota raiz
+// Página Inicial (Aberta para todos)
 Route::get('/', function () {
     return view('welcome_custom');
 });
 
-// Rota Dashboard
-Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+// Dashboard (Padrão do Breeze)
+Route::get('/posts', function () {
+    return view('posts');
+})->middleware(['auth', 'verified'])->name('posts');
 
-// CRUD de Posts
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+// Todas as rotas que PRECISAM de login ficam aqui dentro
+Route::middleware('auth')->group(function () {
+    
+    // Perfil do Usuário
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-// ROTAS DE EDIÇÃO
-Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
-Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    // CRUD de Notas (Protegido)
+    // Usamos resource para facilitar: cria index, create, store, edit, update, destroy de uma vez
+    Route::resource('posts', PostController::class);
+});
 
-// ROTA DE EXCLUSÃO
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+require __DIR__.'/auth.php';

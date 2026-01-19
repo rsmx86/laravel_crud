@@ -1,30 +1,37 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-white leading-tight">
+            {{ __('Editar Nota') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="max-w-2xl mx-auto">
-    <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-2xl">
-        <h2 class="text-2xl font-bold mb-6 text-white">Editar Nota</h2>
-        
-        <form action="{{ route('posts.update', $post->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="mb-5">
-                <label class="block text-gray-400 mb-2 font-medium">Título</label>
-                <input type="text" name="titulo" value="{{ $post->titulo }}" class="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-lg focus:outline-none focus:border-orange-500 transition">
+    <div class="py-12">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl shadow-xl">
+                <form action="{{ route('posts.update', $post) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="mb-6">
+                        <x-input-label for="titulo" value="Título da Nota" />
+                        <x-text-input id="titulo" name="titulo" type="text" class="mt-1 block w-full" :value="old('titulo', $post->titulo)" required />
+                    </div>
+
+                    <div class="mb-6">
+                        <x-input-label for="conteudo" value="Conteúdo" />
+                        <textarea id="conteudo" name="conteudo" rows="6" 
+                            class="mt-1 block w-full bg-zinc-950 border-zinc-800 text-white focus:border-orange-500 focus:ring-orange-500 rounded-lg shadow-sm p-3 transition" 
+                            required>{{ old('conteudo', $post->conteudo) }}</textarea>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-4">
+                        <a href="{{ route('posts.index') }}" class="text-zinc-400 hover:text-white text-sm transition">Cancelar</a>
+                        <x-primary-button>
+                            Atualizar Nota
+                        </x-primary-button>
+                    </div>
+                </form>
             </div>
-            
-            <div class="mb-6">
-                <label class="block text-gray-400 mb-2 font-medium">Conteúdo</label>
-                <textarea name="conteudo" rows="5" class="w-full bg-zinc-950 border border-zinc-800 text-white p-3 rounded-lg focus:outline-none focus:border-orange-500 transition">{{ $post->conteudo }}</textarea>
-            </div>
-            
-            <div class="flex items-center gap-4">
-                <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2.5 rounded-lg font-bold transition">
-                    Atualizar Nota
-                </button>
-                <a href="{{ route('posts.index') }}" class="text-gray-500 hover:text-white transition">Cancelar</a>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-@stop
+</x-app-layout>
