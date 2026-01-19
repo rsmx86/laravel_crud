@@ -17,3 +17,13 @@ Um sistema de gerenciamento de notas elegante, minimalista e funcional, desenvol
 - **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
 - **Banco de Dados:** MySQL
 - **Ambiente:** Laragon (Apache + PHP 8.3)
+
+🛠️ Como rodar o projeto
+Clone o repositório: git clone https://github.com/rsmx86/laravel_crud.git
+Instale as dependências: composer install & npm install
+Configure o ambiente: cp .env.example .env
+Gere a chave: php artisan key:generate
+Execute as migrations: php artisan migrate
+Inicie o servidor: php artisan serve & npm run dev
+🔒 Segurança
+O projeto utiliza verificações de user_id em todos os métodos do Controller para garantir que um usuário nunca acesse ou edite notas de terceiros via URL. 
