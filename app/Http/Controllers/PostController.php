@@ -29,13 +29,32 @@ class PostController extends Controller
         Post::create($request->all());
 
         //redirecionamento
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')->with('success', 'Nota criada com sucesso! ✨');
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('posts.index')->with('succes', 'Post Excluido!');
+        return redirect()->route('posts.index')->with('success', 'Nota excluída permanentemente! 🗑️');
     }
+
+
+
+    public function edit(Post $post)
+{
+    return view('posts.edit', compact('post'));
+}
+
+public function update(Request $request, Post $post)
+{
+    $request->validate([
+        'titulo' => 'required',
+        'conteudo' => 'required',
+    ]);
+
+    $post->update($request->all());
+
+    return redirect()->route('posts.index')->with('success', 'Nota atualizada com sucesso! 📝');
+}
 
 }

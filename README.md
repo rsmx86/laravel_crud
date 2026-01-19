@@ -1,19 +1,19 @@
-# Laravel CRUD - Sistema de Postagens
+# 📝 Laravel CRUD Notes -
 
-Um sistema simples de CRUD (Create, Read, Update, Delete) desenvolvido para aprender os fundamentos do framework Laravel.
+Um sistema de gerenciamento de notas elegante, minimalista e funcional, desenvolvido com **Laravel 11** e **Tailwind CSS**. Este projeto implementa todas as operações fundamentais de um CRUD (Create, Read, Update, Delete) com uma interface moderna em Dark Mode.
 
-## 🚀 Tecnologias
-- PHP 8.x
-- Laravel 11/12
-- Tailwind CSS (via CDN)
-- MySQL (via Laragon)
+## 🚀 Funcionalidades
 
-## 🛠️ Como instalar
-1. Clone o repositório: `git clone https://github.com/SEU_USUARIO/laravel_crud.git`
-2. Entre na pasta: `cd laravel_crud`
-3. Instale as dependências: `composer install`
-4. Copie o arquivo .env: `cp .env.example .env`
-5. Gere a chave do projeto: `php artisan key:generate`
-6. Configure o banco de dados no seu `.env`
-7. Rode as migrations: `php artisan migrate`
-8. Inicie o servidor: `php artisan serve`# laravel_crud
+- **Painel Inicial:** Landing page moderna com apresentação do projeto.
+- **Gerenciamento de Notas:** Listagem dinâmica com visualização clara.
+- **CRUD Completo:** Criação, edição e exclusão de registros.
+- **Feedback ao Usuário:** Notificações animadas de sucesso para cada ação.
+- **Layout Reutilizável:** Estrutura de cabeçalho e rodapé compartilhada (Blade Layouts).
+- **Interface Dark:** Design focado em produtividade usando a paleta Zinc do Tailwind.
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Framework:** [Laravel 11](https://laravel.com/)
+- **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+- **Banco de Dados:** MySQL
+- **Ambiente:** Laragon (Apache + PHP 8.3)

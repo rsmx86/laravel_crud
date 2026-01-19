@@ -1,42 +1,43 @@
-<<script src="https://cdn.tailwindcss.com"></script>
-<body class="bg-gray-100 p-10">
-    <div class="max-w-4xl mx-auto">
-        
-        <nav class="mb-8 bg-white p-4 rounded-lg shadow flex gap-4">
-            <a href="/" class="text-blue-600 font-bold hover:underline">Início</a>
-            <a href="{{ route('posts.store') }}" class="text-blue-600 font-bold hover:underline">Notas</a>
-        </nav>
+@extends('layouts.app')
 
-        <div class="bg-white p-8 rounded-lg shadow">
-            <div class="flex justify-between mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Minhas Notas</h2>
-                <a href="{{ route('posts.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"> + Nova Nota</a>
-            </div>
-
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-3">Título</th>
-                        <th class="p-3">Conteúdo</th>
-                        <th class="p-3 text-right">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($posts as $post)
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="p-3 font-semibold">{{ $post->titulo }}</td>
-                        <td class="p-3 text-gray-600">{{ $post->conteudo }}</td>
-                        <td class="p-3 text-right">
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Tem certeza?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700 font-bold">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+@section('content')
+<div class="flex justify-between items-end mb-8">
+    <div>
+        <h2 class="text-3xl font-bold">Minhas Notas</h2>
+        <p class="text-gray-500">Gerencie seus registros salvos no banco de dados.</p>
     </div>
-</body>
+    <a href="{{ route('posts.create') }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-bold transition">
+        + Nova Nota
+    </a>
+</div>
+
+<div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-2xl">
+    <table class="w-full text-left border-collapse">
+        <thead>
+            <tr class="bg-zinc-800/50 text-gray-400 uppercase text-xs letter tracking-widest">
+                <th class="p-4 border-b border-zinc-800">Título</th>
+                <th class="p-4 border-b border-zinc-800">Conteúdo</th>
+                <th class="p-4 border-b border-zinc-800 text-right">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-800">
+            @foreach($posts as $post)
+            <tr class="hover:bg-zinc-800/30 transition">
+                <td class="p-4 font-bold text-orange-400">{{ $post->titulo }}</td>
+                <td class="p-4 text-gray-400">{{ Str::limit($post->conteudo, 50) }}</td>
+                <td class="p-4 text-right">
+                    <div class="flex justify-end gap-3">
+                        <a href="{{ route('posts.edit', $post->id) }}" class="text-zinc-400 hover:text-white transition">Editar</a>
+                        
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Excluir esta nota?')">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="text-red-500/70 hover:text-red-500 transition font-medium">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@stop
