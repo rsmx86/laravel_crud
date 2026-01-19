@@ -11,3 +11,5 @@
 .phpunit.result.cache
 docker-compose.override.yml
 user.ini
+/database/*.sqlite
+/database/*.sqlite-journal
